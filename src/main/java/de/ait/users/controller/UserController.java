@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController //тоже аннотация Spring, но превращает класс в rest api
+@RequestMapping("/api") //добавляет /api к началу пути, т.е. общий префикс. Аннотация ставится перед классом
 public class UserController {
 
     private final IUserService service;
@@ -21,13 +22,10 @@ public class UserController {
     //GET /users?n=jack
 
     @GetMapping("/users") //аннотация, которая генерит endpoint, метод будет выполняться по вводу в браузер адреса localhost:8080/users
-    public List<User> getUsers(@RequestParam (name = "n", required = false, defaultValue = "") String name){
-        if(name.equals("")){
+    public List<User> getUsers(@RequestParam (name = "n", required = false, defaultValue = "") String name,
+                               @RequestParam (name = "email", required = false, defaultValue = "") String email){
 
-        return service.findAll();
-        } else {
-            return service.findByName(name);
-        }
+        return service.getUsers(name, email);
     }
 
     @PostMapping("/users")
@@ -38,6 +36,10 @@ public class UserController {
     public User getUserById(@PathVariable (name = "id") Long id){
 
         return service.findById(id);
+    }
+    @PutMapping("/users")
+    public User updateUser (@RequestBody User user){
+        return service.updateUser(user);
     }
 
 //    @GetMapping("/users/{id}/accounts/{accountId}")
