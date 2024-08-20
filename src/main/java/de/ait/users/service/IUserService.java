@@ -1,15 +1,14 @@
 package de.ait.users.service;
 
+import de.ait.users.dto.UserRequestDto;
 import de.ait.users.entity.User;
 
 import java.util.List;
 
 public interface IUserService {
-//    List<User> findAll();
-//    List<User> findByName(String name);
 
     List<User> getUsers(String name, String email);
-    User createNewUser(User user);
+    User createNewUser(UserRequestDto request);
     User findById(Long id);
-    User updateUser (User user);
+    User updateUser (Long id, UserRequestDto request);
 }

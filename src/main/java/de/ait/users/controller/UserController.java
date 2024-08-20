@@ -1,5 +1,6 @@
 package de.ait.users.controller;
 
+import de.ait.users.dto.UserRequestDto;
 import de.ait.users.entity.User;
 import de.ait.users.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,17 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User createNewUser (@RequestBody User user){
-        return service.createNewUser(user);
+    public User createNewUser (@RequestBody UserRequestDto request){
+        return service.createNewUser(request);
     }
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable (name = "id") Long id){
 
         return service.findById(id);
     }
-    @PutMapping("/users")
-    public User updateUser (@RequestBody User user){
-        return service.updateUser(user);
+    @PutMapping("/users/{id}")
+    public User updateUser (@PathVariable (name = "id") Long id, @RequestBody UserRequestDto request){
+        return service.updateUser(id, request);
     }
 
 //    @GetMapping("/users/{id}/accounts/{accountId}")

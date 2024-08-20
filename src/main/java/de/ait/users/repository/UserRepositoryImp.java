@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@Component
 @Repository //тоже работает для Spring, но всем понятнее что это репо
@@ -26,14 +27,38 @@ public class UserRepositoryImp implements IUserRepository {
     public User save(User user) {
         if(user.getId() == null){
             //создание нового
-            Long newId = database.get(database.size() -1).getId() + 1;
-            user.setId(newId);
-            database.add(user);
+            return createUser(user);
+
         } else{
-            //изменение
-            //TODO update user
+           return updateUser(user);
+        }
+    }
+
+    private User createUser(User user) {
+        Long newId = database.get(database.size() -1).getId() + 1;
+        user.setId(newId);
+        database.add(user);
+        return user;
+    }
+
+    private User updateUser (User user) {
+        Optional<User> userFromDb = findById(user.getId());
+
+        if(userFromDb.isEmpty()){
+            return null;
+        } else {
+            User u = userFromDb.get();
+            u.setName(user.getName());
+            u.setEmail(user.getEmail());
+            u.setPassword(user.getPassword());
         }
         return user;
     }
+
+    private Optional<User> findById (Long id) {
+      return database.stream()
+              .filter(u -> u.getId().equals(id))
+              .findFirst();
+    };
 
 }
