@@ -1,5 +1,6 @@
 package de.ait.users.service;
 
+import de.ait.users.dto.UserRequestDto;
 import de.ait.users.entity.User;
 import de.ait.users.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,12 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public User createNewUser(User user) {
-        if (user.getId() != null) {
-            user.setId(null);
-        }
-        return repository.save(user);
+    public User createNewUser(UserRequestDto request) {
+
+//        преобразование DTO в entity
+        User entity = UserRequestDto.toEntity(request);
+
+        return repository.save(entity);
     }
 
     @Override
@@ -55,8 +57,12 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        return repository.save(user);
+    public User updateUser(Long id, UserRequestDto request) {
+
+        User entity = UserRequestDto.toEntity(request);
+        entity.setId(id);
+
+        return repository.save(entity);
     }
 
 }
