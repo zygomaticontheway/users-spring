@@ -13,6 +13,10 @@ public class User {
         this.password = password;
     }
 
+    //пустой конструктор нужен для библиотеки mapper
+    public User() {
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

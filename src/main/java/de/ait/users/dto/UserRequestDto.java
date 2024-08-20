@@ -13,6 +13,10 @@ public class UserRequestDto {
         this.password = password;
     }
 
+    //пустой конструктор нужен для библиотеки mapper
+    public UserRequestDto() {
+    }
+
     public String getName() {
         return name;
     }

@@ -4,6 +4,7 @@ import de.ait.users.dto.UserRequestDto;
 import de.ait.users.dto.UserResponseDto;
 import de.ait.users.entity.User;
 import de.ait.users.repository.IUserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,12 @@ import java.util.function.Predicate;
 public class UserServiceImp implements IUserService {
 
     private final IUserRepository repository;
+    private final ModelMapper mapper;
 
     @Autowired
-    public UserServiceImp(@Qualifier("getRepository") IUserRepository repository) {
+    public UserServiceImp(@Qualifier("getRepository") IUserRepository repository, ModelMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     public List<UserResponseDto> findAll() {
@@ -46,9 +49,11 @@ public class UserServiceImp implements IUserService {
     public UserResponseDto createNewUser(UserRequestDto request) {
 
 //        преобразование DTO в entity
-        User entity = UserRequestDto.toEntity(request);
+//        User entity = repository.save(UserRequestDto.toEntity(request));
+        User entity = repository.save(mapper.map(request, User.class));
 
-        return UserResponseDto.of(repository.save(entity));
+//        return UserResponseDto.of(repository.save(entity));
+        return  mapper.map(entity, UserResponseDto.class);
     }
 
     @Override

@@ -36,6 +36,10 @@ public class UserResponseDto {
         this.name = name;
     }
 
+    //пустой конструктор нужен для библиотеки mapper
+    public UserResponseDto() {
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
