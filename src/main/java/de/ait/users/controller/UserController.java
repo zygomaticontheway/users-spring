@@ -1,7 +1,7 @@
 package de.ait.users.controller;
 
 import de.ait.users.dto.UserRequestDto;
-import de.ait.users.entity.User;
+import de.ait.users.dto.UserResponseDto;
 import de.ait.users.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +23,23 @@ public class UserController {
     //GET /users?n=jack
 
     @GetMapping("/users") //аннотация, которая генерит endpoint, метод будет выполняться по вводу в браузер адреса localhost:8080/users
-    public List<User> getUsers(@RequestParam (name = "n", required = false, defaultValue = "") String name,
-                               @RequestParam (name = "email", required = false, defaultValue = "") String email){
+    public List<UserResponseDto> getUsers(@RequestParam (name = "n", required = false, defaultValue = "") String name,
+                                          @RequestParam (name = "email", required = false, defaultValue = "") String email){
 
         return service.getUsers(name, email);
     }
 
     @PostMapping("/users")
-    public User createNewUser (@RequestBody UserRequestDto request){
+    public UserResponseDto createNewUser (@RequestBody UserRequestDto request){
         return service.createNewUser(request);
     }
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable (name = "id") Long id){
+    public UserResponseDto getUserById(@PathVariable (name = "id") Long id){
 
         return service.findById(id);
     }
     @PutMapping("/users/{id}")
-    public User updateUser (@PathVariable (name = "id") Long id, @RequestBody UserRequestDto request){
+    public UserResponseDto updateUser (@PathVariable (name = "id") Long id, @RequestBody UserRequestDto request){
         return service.updateUser(id, request);
     }
 
