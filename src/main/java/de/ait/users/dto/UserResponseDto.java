@@ -1,5 +1,10 @@
 package de.ait.users.dto;
 
+import de.ait.users.entity.User;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class UserResponseDto {
     private Long id;
     private String name;
@@ -33,5 +38,18 @@ public class UserResponseDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+//    User -> UserResponseDto
+    public static UserResponseDto of (User user) {
+        return new UserResponseDto(user.getId(), user.getName(), user.getEmail());
+    }
+
+    //   List<User> -> List<UserResponseDto>
+    public static List<UserResponseDto> of (List<User> users) {
+
+        return users.stream()
+                .map(UserResponseDto::of)
+                .collect(Collectors.toList());
     }
 }
