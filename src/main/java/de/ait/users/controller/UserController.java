@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController //тоже аннотация Spring, но превращает класс в rest api
-@RequestMapping("/api") //добавляет /api к началу пути, т.е. общий префикс. Аннотация ставится перед классом
+//@RequestMapping("/api") //добавляет /api к началу пути, т.е. общий префикс. Аннотация ставится перед классом
 public class UserController {
 
     private final IUserService service;

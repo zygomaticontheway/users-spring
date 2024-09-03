@@ -4,6 +4,7 @@ import de.ait.users.dto.UserRequestDto;
 import de.ait.users.dto.UserResponseDto;
 import de.ait.users.entity.User;
 import de.ait.users.repository.IUserRepository;
+import de.ait.users.repository.IUserRepositoryJpa;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,11 +16,11 @@ import java.util.function.Predicate;
 @Service
 public class UserServiceImp implements IUserService {
 
-    private final IUserRepository repository;
+    private final IUserRepositoryJpa repository;
     private final ModelMapper mapper;
 
     @Autowired
-    public UserServiceImp(@Qualifier("getRepository") IUserRepository repository, ModelMapper mapper) {
+    public UserServiceImp(IUserRepositoryJpa repository, ModelMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }

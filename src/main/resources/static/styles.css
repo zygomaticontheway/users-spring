@@ -1,0 +1,14 @@
+.user {
+  margin-bottom: 0px;
+  padding: 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.user h3 {
+  margin-top: 0;
+}
+
+.user p {
+  margin-bottom: 0;
+}
